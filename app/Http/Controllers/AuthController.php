@@ -12,14 +12,14 @@ class AuthController extends Controller
         $this->middleware('jwt', ['except' => ['login', 'register']]);
     }
 
-    public function register(){
+    public function register(){ //Registro de usuarios
         $user = new User(request()->all());
         $user->password = bcrypt($user->password);
         $user->save();
         return response()->json(["data"=>$user], 200);   
     }
 
-    public function login()
+    public function login()//login de usuarios
     {
         $credentials = request(['email', 'password']);
 
@@ -30,7 +30,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function logout()
+    public function logout()//Cerrar Sesion de usuarios
     {
         auth()->logout();
 
